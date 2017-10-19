@@ -1,5 +1,4 @@
 
-import java.io.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -13,7 +12,3 @@ public class Main {
     }
 }
 
-interface Sequence<E> {
-    void print(String delimiter, PrintStream ps);
-    int size();
-}
