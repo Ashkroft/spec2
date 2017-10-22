@@ -1,26 +1,30 @@
 public class List<E extends Comparable<E>> {
-    private static class Node<E> {
+    private class Node<E> {
         E info;
         Node<E> next;
 
-        public Node(Node<E> next, E info) {
-            this.next = next;
+        public Node(E info) {
+            this.next = null;
             this.info = info;
         }
     }
 
     Node<E> head = null;
+    Node<E> tail = new Node<>(null);
     int size = 0;
 
     public void add(E item) {
-        head = new Node<>(head, item);
+        Node <E> buf = new Node<>(item);
+        tail.next = buf;
+        tail = tail.next;
+        if (size == 0) head = tail;
         size++;
     }
 
     public void swap(int i, int j) {
         if (i == j) {
             return;
-        } else if (i < 0 || j < 0 || i > size || j > size) {
+        } else if (i < 0 || j < 0 || i > size || j > size || size < 2) {
             throw new IndexOutOfBoundsException("Index is out of bounds");
         }
 
@@ -126,12 +130,12 @@ public class List<E extends Comparable<E>> {
         List<Integer> myList = new List<>();
         myList.add(1);
         myList.add(2);
-        myList.add(3);
-        myList.add(4);
-        myList.add(5);
-        myList.add(6);//6 5 4 3 2 1
-        myList.print();
-        myList.swap(1, 4);//6 2 4 3 5 1
+//        myList.add(3);
+//        myList.add(4);
+//        myList.add(5);
+//        myList.add(6);//6 5 4 3 2 1
+//        myList.print();
+//        myList.swap(1, 4);//6 2 4 3 5 1
         myList.print();
         myList.sort();//1 2 3 4 5 6
         myList.print();
