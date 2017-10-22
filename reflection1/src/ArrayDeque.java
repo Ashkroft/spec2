@@ -91,10 +91,14 @@ public class ArrayDeque<E> implements Deque<E> {
         return ans;
     }
 
+    public int size(){
+        return curSize;
+    }
+
     @Override
     public Iterator<E> iterator() {
         return new Iterator<E>() {
-            int currElem = head;
+            int currElem = head - 1;
 
             @Override
             public boolean hasNext() {

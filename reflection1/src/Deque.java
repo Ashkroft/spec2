@@ -6,4 +6,5 @@ public interface Deque<E> extends Iterable<E> {
     void addLast(E elem); // Добавляет элемент в конец очереди.
     E last(); // Выдает последний элемент очереди.
     E removeLast(); // Удаляет последний элемент из очереди (и выдает его).
+
 }
