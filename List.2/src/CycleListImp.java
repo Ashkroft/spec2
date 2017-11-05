@@ -51,7 +51,7 @@ public class CycleListImp<E> implements CycleList<E> {
 
         @Override
         public boolean hasNext() {
-            return (current != null);
+            return (head != null);
         }
 
         @Override
@@ -61,7 +61,7 @@ public class CycleListImp<E> implements CycleList<E> {
             else {
                 Node<E> temp = current;
                 current = current.next;
-                if (current == head) current = null;
+              //  if (current == head) current = null;
                 return temp.info;
             }
         }
