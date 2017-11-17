@@ -1,30 +1,49 @@
-
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) throws Exception {
 
-        Class<ArrayDeque> clasArrDeq = ArrayDeque.class;
-        Class<ListDeque> clasLinqDeq = ListDeque.class;
-
         if (args.length == 0) {
             System.out.println("No arguments!");
             return;
         }
 
-        Deque<Integer> deque = null;
-        int maxDeq = 0;
-        System.out.println(args[0]);
-        if (args.length == 2) {
-            maxDeq = Integer.parseInt(args[1]);
-            Constructor<ArrayDeque> constructor = clasArrDeq.getConstructor(Integer.class);
-            deque = constructor.newInstance(new Object[] { maxDeq });
-        } else {
-            deque = new ListDeque<>();
+        ClassLoader classLoader = Main.class.getClassLoader();
+        Class<Deque> dequeClass = null;
+        try {
+            dequeClass = (Class<Deque>) classLoader.loadClass(args[0]);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
 
+        int maxDeq = 0;
+        Deque<Integer> deque = null;
+        if (dequeClass.getName().equals("ArrayDeque")) {
+            Constructor constructor = null;
+            maxDeq = Integer.parseInt(args[1]);
+            try {
+                constructor = dequeClass.getConstructor(Integer.class);
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                deque = (Deque<Integer>) constructor.newInstance(new Object[] { maxDeq });
+            } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+
+        } else {
+
+            try {
+                deque = dequeClass.newInstance();
+            } catch (InstantiationException | IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
 
         int n = 5;
         for (int i = 0; i < n; i++) {
