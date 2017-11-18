@@ -1,7 +1,9 @@
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Arrays;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InvocationTargetException, IllegalAccessException {
         int n = 5 + (int) (Math.random() * 20);
         System.out.println("Elements: " + n);
 
@@ -18,26 +20,17 @@ public class Main {
             System.out.println("Error with arguments");
             return;
         }
-
-        switch (args[0]) {
-            case "insertionSort":
-                Sort.bubbleSort(arr);
-                break;
-            case "mergeSort":
-                Sort.insertSort(arr);
-                break;
-            case "quickSort":
-                Sort.countingSort(arr);
-                break;
-
-            default:
-                System.out.println("Error in method's name");
+        Method method = null;
+        Sort HelpMe = new Sort();
+        try{
+            method = HelpMe.getClass().getMethod(args[0], Integer[].class);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
         }
-
+        method.invoke(new Sort(),(Object) arr);
         // After
         System.out.println(Arrays.toString(arr));
 
     }
 
 }
-
